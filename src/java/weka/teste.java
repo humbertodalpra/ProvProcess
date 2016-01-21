@@ -25,26 +25,30 @@ public class teste {
         //exemplo1.criararff();
         exemplo1.leDados();
         //exemplo1.imprimeDados();
-        // exemplo1.JCBA();
+        exemplo1.JCBA();
 
         StringBuilder result = new StringBuilder();
-        
+
         String[] x = exemplo1.JCBA().split("\n");
         for (String i : x) {
             if (i.indexOf("conf:") > 0) {
                 try {
-                    String p1 = (Integer.parseInt(i.substring(i.indexOf("conf:") + 6, i.indexOf("),"))) * 100) + "%"; // value conf
+                    String p1 = (Float.parseFloat(i.substring(i.indexOf("conf:") + 6, i.indexOf("),"))) * 100) + "%"; // value conf
                     String p2 = i.split(" ")[0]; // value firt part to space 
+                    String p3 = i.split(" ")[3]; // value firt part to space 
                     p2 = p2.replace("=", " ");
                     p2 = p2.substring(p2.indexOf("\t") + 1, p2.length());
-                    String pr = p1 + " of instances with " + p2 + " resulted in system error.";
+                    p3 = p3.substring(p3.indexOf(" ") + 1, p3.length());
+                    String pr = p1 + " of instances with " + p2;
+                    pr += p3.isEmpty() ? "" : " and " + p3;
+                    pr += " resulted in system error.";
                     result.append(pr).append("\n");
                 } catch (Exception e) {
                     result.append("Line not classified:").append(i).append("\n");
                 }
             }
         }
-        
+
         System.out.println(result.toString());
     }
 }

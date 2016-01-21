@@ -48,11 +48,15 @@ public class WekaBean implements Serializable {
         for (String i : x) {
             if (i.indexOf("conf:") > 0) {
                 try {
-                    String p1 = (Integer.parseInt(i.substring(i.indexOf("conf:") + 6, i.indexOf("),"))) * 100) + "%"; // value conf
+                    String p1 = (Float.parseFloat(i.substring(i.indexOf("conf:") + 6, i.indexOf("),"))) * 100) + "%"; // value conf
                     String p2 = i.split(" ")[0]; // value firt part to space 
+                    String p3 = i.split(" ")[3]; // value firt part to space 
                     p2 = p2.replace("=", " ");
                     p2 = p2.substring(p2.indexOf("\t") + 1, p2.length());
-                    String pr = p1 + " of instances with " + p2 + " ware in system error.";
+                    p3 = p3.substring(p3.indexOf(" ") + 1, p3.length());
+                    String pr = p1 + " of instances with " + p2;
+                    pr += p3.isEmpty() ? "" : " and " + p3;
+                    pr += " resulted in system error.";
                     result.add(pr + "\n");
                 } catch (Exception e) {
                     result.add("Line not classified:" + i + "\n");

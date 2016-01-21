@@ -81,7 +81,7 @@ public class Weka implements Runnable {
         avaliacao.evaluateModel(car, dados);
         //System.out.println("Instancias corretas: " + avaliacao.correct() + "\n");
         results.add("Instancias corretas: " + avaliacao.correct() + "\n");
-
+System.out.println(results.toString());
         return results.toString();
     }
 
