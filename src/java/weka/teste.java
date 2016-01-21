@@ -24,7 +24,7 @@ public class teste {
 
         //exemplo1.criararff();
         exemplo1.leDados();
-        //exemplo1.imprimeDados();
+        exemplo1.imprimeDados();
         exemplo1.JCBA();
 
         StringBuilder result = new StringBuilder();

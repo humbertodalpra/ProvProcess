@@ -108,7 +108,6 @@ System.out.println(results.toString());
         acts = ActivityDAO.getInstance().buscarNomeInstancias();
         for (Object act1 : acts) {
             act = (Activity) act1;
-
             data += act.getName().replace(" ", "");
             data += ",";
         }
@@ -119,7 +118,7 @@ System.out.println(results.toString());
         acts = ActivityDAO.getInstance().buscarTipoInstancias();
         for (Object act1 : acts) {
             act = (Activity) act1;
-            if (!act.getTypeActivity().equals("-")) {
+            if (!act.getTypeActivity().equals("-") && !act.getTypeActivity().equals("")) {
                 data += act.getTypeActivity().replace(" ", "");
                 data += ",";
             }
@@ -127,11 +126,12 @@ System.out.println(results.toString());
         data += "}";
         data += "\n";
 
-        data += "@attribute Priority {";
+        
         acts = ActivityDAO.getInstance().buscarPrioridadeInstancias();
+        data += "@attribute Priority {";
         for (Object act1 : acts) {
             act = (Activity) act1;
-            if (!act.getPriority().equals("-")) {
+            if (!act.getPriority().equals("-") && !act.getPriority().equals("")) {
                 data += act.getPriority().replace(" ", "");
                 data += ",";
             }
@@ -165,11 +165,10 @@ System.out.println(results.toString());
         agts = AgentDAO.getInstance().buscarAgenteInstancia();
         for (Object agt1 : agts) {
             agt = (Agent) agt1;
-            if (!agt.getName().equals("-")) {
+            if (!agt.getName().equals("-") && !agt.getName().equals("")) {
                 data += agt.getName();
                 data += ",";
             }
-
         }
         data += "}";
         data += "\n";
@@ -178,7 +177,7 @@ System.out.println(results.toString());
         agts = AgentDAO.getInstance().buscarAgenteTypeInstancia();
         for (Object agt1 : agts) {
             agt = (Agent) agt1;
-            if (!agt.getTypeAgent().equals("-")) {
+            if (!agt.getTypeAgent().equals("-") && !agt.getTypeAgent().equals("")) {
                 data += agt.getTypeAgent().replace(" ", "");
                 data += ",";
             }
@@ -192,7 +191,7 @@ System.out.println(results.toString());
         ents = EntityDAO.getInstance().buscartipoentity();
         for (Object ent1 : ents) {
             ent = (Entity) ent1;
-            if (!ent.getTypeEntity().equals("-")) {
+            if (!ent.getTypeEntity().equals("-") && !ent.getTypeEntity().equals("")) {
                 data += ent.getTypeEntity().replace(" ", "");
                 data += ",";
             }
@@ -226,53 +225,58 @@ System.out.println(results.toString());
             act = (Activity) act1;
             data += act.getIdProcessInstance();
             data += ",";
-            if (!act.getName().equals("-")) {
+            if (!act.getName().equals("-") && !act.getName().equals("")) {
                 data += act.getName().replace(" ", "");
+            data += ",";
             } else {
                 data += "?";
+                data += ",";
             }
-            data += ",";
-            if (!act.getTypeActivity().equals("-")) {
+            
+            if (!act.getTypeActivity().equals("-") && !act.getTypeActivity().equals("")) {
                 data += act.getTypeActivity().replace(" ", "");
+                data += ",";
             } else {
                 data += "?";
+                data += ",";
             }
-            data += ",";
-            if (!act.getPriority().equals("-")) {
+            if (!act.getPriority().equals("-") && !act.getPriority().equals("")) {
                 data += act.getPriority().replace(" ", "");
+                data += ",";
             } else {
                 data += "?";
+                data += ",";
             }
-
-            data += ",";
             agt = (Agent) agts.get(i);
-            if (!agt.getName().equals("-")) {
+            if (!agt.getName().equals("-") && !agt.getName().equals("")) {
                 data += agt.getName().replace(" ", "");
+                data += ",";
             } else {
                 data += "?";
+                data += ",";
             }
-            data += ",";
-            if (!agt.getTypeAgent().equals("-")) {
+            if (!agt.getTypeAgent().equals("-") && !agt.getTypeAgent().equals("")) {
                 data += agt.getTypeAgent().replace(" ", "");
+                data += ",";
             } else {
                 data += "?";
+                data += ",";
             }
-            data += ",";
-
             ent = (Entity) ents.get(i);
-            if (!ent.getTypeEntity().equals("-")) {
+            if (!ent.getTypeEntity().equals("-") && !ent.getTypeEntity().equals("")) {
                 data += ent.getTypeEntity().replace(" ", "");
+                data += ",";
             } else {
                 data += "?";
+                data += ",";
             }
-            data += ",";
-
             boolean valid = false;
             for (Object wib2 : wibs) {
                 Wasinformedby wib = (Wasinformedby) wib2;
                 if (valid == false) {
                     if (act.getIdProcessInstance() == wib.getActivityidActivityInformed().getIdProcessInstance()) {
                         data += wib.getActivityidActivityInformant().getIdProcessInstance();
+                        data += ",";
                         valid = true;
                     }
                 }
@@ -280,8 +284,8 @@ System.out.println(results.toString());
             if (valid == false) {
                 data += "?";
                 valid = true;
+                data += ",";
             }
-            data += ",";
             data += act.getWasinformedbyList().isEmpty() ? "0" : "1";
 
             data += "\n";

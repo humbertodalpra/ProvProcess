@@ -201,8 +201,8 @@ public class ArchiveBean implements Serializable {
         //SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("BRT"));
-        startDate = df.parse(objetcs[4]);
-        endDate = df.parse(objetcs[5]);
+        startDate = objetcs[4].equals("-") ? null :df.parse(objetcs[4]);
+        endDate = objetcs[5].equals("-") ? null: df.parse(objetcs[5]);
         activity.setStartTime(startDate);
         activity.setEndTime(endDate);
         activity = ActivityDAO.getInstance().persistir(activity);
