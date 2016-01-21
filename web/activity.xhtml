@@ -1,0 +1,137 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Manager Activity</h2>
+        <br/>
+        <h:form id="formPrincipal">
+            <p:outputLabel value="* MM/dd/yyyy HH:mm" style="color: #ff0100"/> 
+            <br/><br/>
+            <div align="center">
+                <p:dataTable var="lista" value="#{activityBean.activitys}"
+                             id="tabelaActivity" emptyMessage="No records found"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                    <p:column headerText="ID" sortBy="#{lista.idActivity}" filterBy="#{lista.idActivity}">
+                        <center>
+                            <h:outputText value="#{lista.idActivity}" />
+                        </center>
+                    </p:column>
+
+                    <p:column headerText="Name" sortBy="#{lista.name}" filterBy="#{lista.name}">
+                        <center>
+                            <h:outputText value="#{lista.name}" />
+                        </center>
+                    </p:column>
+
+                    <p:column headerText="Start Time*" sortBy="#{lista.startTime}" filterBy="#{lista.startTime}">
+                        <center>
+                            <h:outputText value="#{lista.startTime}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                            </h:outputText>
+                        </center>
+                    </p:column>
+
+                    <p:column headerText="End Time*" sortBy="#{lista.endTime}" filterBy="#{lista.endTime}">
+                        <center>
+                            <h:outputText value="#{lista.endTime}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                            </h:outputText>
+                        </center>
+                    </p:column>
+                    <p:column headerText="Id Process Instance" sortBy="#{lista.idProcessInstance}" filterBy="#{lista.idProcessInstance}">
+                        <center>
+                            <h:outputText value="#{lista.idProcessInstance}" />
+                        </center>
+                    </p:column>
+
+                    <p:column headerText="Type" sortBy="#{lista.typeActivity}" filterBy="#{lista.typeActivity}">
+                        <center>
+                            <h:outputText value="#{lista.typeActivity}" />
+                        </center>
+                    </p:column>
+
+                    <p:column headerText="Priority" sortBy="#{lista.priority}" filterBy="#{lista.priority}">
+                        <center>
+                            <h:outputText value="#{lista.priority}" />
+                        </center>
+                    </p:column>
+
+                    <p:column headerText="Options" exportable="false">
+                        <center>
+                            <p:commandButton icon="ui-icon-pencil" value="Edit" onclick="PF('record').show();"> 
+                                <f:setPropertyActionListener target="#{activityBean.activity}"
+                                                             value="#{lista}" />
+                            </p:commandButton>
+
+                            <p:commandButton icon="ui-icon-trash" value="Delete" onclick="PF('remove').show();"> 
+                                <f:setPropertyActionListener target="#{activityBean.activity}"
+                                                             value="#{lista}" />
+                            </p:commandButton> 
+                        </center>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+            <br/>
+            <p:column>
+                <p:commandButton icon="ui-icon-plus" value="New" onclick="PF('record').show();">  
+                </p:commandButton> 
+            </p:column>
+            <div align="center">
+                <h3>Export Page Data Only</h3>
+
+                <h:commandLink id="excel">
+                    <p:graphicImage name="./images/exports/excel.png" />
+                    <p:dataExporter type="xls" target="tabelaActivity" fileName="activitys" postProcessor="#{activityBean.postProcessXLS}" />
+                </h:commandLink>
+
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabelaActivity" fileName="activitys" preProcessor="#{activityBean.preProcessPDF}" />
+                </h:commandLink>
+
+
+                <h:commandLink>
+                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tabelaActivity" fileName="activitys" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tabelaActivity" fileName="activitys" />
+                </h:commandLink>
+            </div>
+
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>  
+
+
+            <p:dialog header="Record" widgetVar="record" modal="false" focus="name">
+
+
+                <p:panelGrid id="panelRecord" columns="2"> 
+                    Description:
+                    <p:inputText id="name" value="#{activityBean.activity.name}" />
+
+                </p:panelGrid>
+
+                <br/>
+                <p:commandButton value="Record"  
+                                 actionListener="#{activityBean.record}" onclick="record.hide()" alt="Record"/> 
+            </p:dialog>
+
+            <p:dialog header="Delete" widgetVar="remove" modal="false"> 
+                Are you sure?
+                <p:commandButton value="Delete"  
+                                 actionListener="#{activityBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

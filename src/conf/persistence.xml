@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="hibernate-persistence">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>model.Activity</class>
+    <class>model.Agent</class>
+    <class>model.AssociatedAgent</class>
+    <class>model.WasAssociatedWith</class>
+    <class>model.User</class>
+    <class>model.Actedonbehalfof</class>
+    <class>model.Entity</class>
+    <class>model.Wasassociatedwith</class>
+    <class>model.Wasgeneratedby</class>
+    <class>model.Used</class>
+    <class>model.Archive</class>
+    <class>model.Wasattributedto</class>
+    <class>model.HadprimarysourceAttribute</class>
+    <class>model.Wasinfluencedby</class>
+    <class>model.Attribute</class>
+    <class>model.Wasinvalidatedby</class>
+    <class>model.WasquotedfromAttribute</class>
+    <class>model.Wasstartedby</class>
+    <class>model.Wasderivedfrom</class>
+    <class>model.Wasinformedby</class>
+    <class>model.WasrevisionofAttribute</class>
+    <class>model.Hadmember</class>
+    <class>model.Wasendedby</class>
+    <class>model.Specializationof</class>
+    <class>model.Alternateof</class>
+    <class>weka.Weka</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
+      <property name="eclipselink.weaving" value="static"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/provprocess"/>
+      <property name="javax.persistence.jdbc.password" value="admin"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>

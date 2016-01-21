@@ -1,0 +1,92 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel value="Id Activity:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.idActivity}" />
+
+                <h:outputLabel value="Name:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.name}" />
+
+                <h:outputLabel value="Start Time:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.startTime}"/>
+
+                <h:outputLabel value="End Time:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.endTime}"/>
+
+                <h:outputLabel value="ID Instance:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.idProcessInstance}"/>
+
+                <h:outputLabel value="Type Activity:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.typeActivity}"/>
+
+                <h:outputLabel value="Priority:" styleClass="panelGridLabel" />
+                <h:outputText value="#{activityBean.activity.priority}"/>
+
+            </h:panelGrid>
+            <br/>
+
+            <H2>
+                <CENTER>
+                    Information without inferences
+                </CENTER>
+            </H2>
+            <div align="center">
+                <p:dataTable var="ont2" value="#{(ontologyBean.getwasAssociatedWith(activityBean.activity.name, activityBean.activity.idActivity))}" id="tb3" emptyMessage="No records found" style="width:30%">
+
+                    <p:column headerText="Was Associated With">
+                        <h:outputText value="#{ont2}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <br/>
+                <p:dataTable var="ont2" value="#{(ontologyBean.getwasInformedBy(activityBean.activity.name, activityBean.activity.idActivity))}" id="tb4" emptyMessage="No records found" style="width:30%">
+
+                    <p:column headerText="Was Informed By">
+                        <h:outputText value="#{ont2}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <br/>
+                <p:dataTable var="ont2" value="#{(ontologyBean.getused(activityBean.activity.name, activityBean.activity.idActivity))}" id="tb5" emptyMessage="No records found" style="width:30%">
+
+                    <p:column headerText="Used">
+                        <h:outputText value="#{ont2}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <H2>
+                    <CENTER>
+                        Information wtih inferences
+                    </CENTER>
+                </H2>
+
+                <p:dataTable var="ont" value="#{(ontologyBean.getInfluenced(activityBean.activity.name, activityBean.activity.idActivity))}" id="tbl" emptyMessage="No records found" style="width:30%">
+
+                    <p:column headerText="Influenced">
+                        <h:outputText value="#{ont}" />
+                    </p:column>
+
+                </p:dataTable>
+                <br/>
+                <p:dataTable var="ont2" value="#{(ontologyBean.getwasInfluencedBy(activityBean.activity.name, activityBean.activity.idActivity))}" id="tb2" emptyMessage="No records found" style="width:30%">
+
+                    <p:column headerText="Was Influenced By">
+                        <h:outputText value="#{ont2}" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

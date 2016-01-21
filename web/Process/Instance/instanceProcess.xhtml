@@ -1,0 +1,120 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content"> <br></br>
+
+        <h2 class="page-header"> <center> Activity </center></h2>
+        <h:form>
+            <p:dataTable var="list2" value="#{activityBean.buscar(activityBean.activity.idProcessInstance)}" id="tabela2" emptyMessage="No Records Found"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
+                >
+
+                <p:column headerText="Id">
+                    <center>
+                        <h:outputText value="#{list2.idActivity}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Name">
+                    <center>
+                        <h:outputText value="#{list2.name}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Type">
+                    <center>
+                        <h:outputText value="#{list2.typeActivity}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Option">
+                    <center>
+                        <p:commandButton title="Details" 
+                                         value="Details" 
+                                         icon="ui-icon-zoomin" 
+                                         action="/faces/Process/Activity/instanceProcess.xhtml?faces-redirect=true"
+                                         ajax="true">
+                            <f:setPropertyActionListener value="#{list2}" target="#{activityBean.activity}" />
+                        </p:commandButton>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h2 class="page-header"> <center> Agent </center></h2>
+
+        <h:form>
+            <p:dataTable var="list1" value="#{wasassociatedwithBean.buscar(activityBean.activity.idProcessInstance)}" id="tabela0" emptyMessage="No Records Found"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
+                >
+
+                <p:column headerText="Id">
+                    <center>
+                        <h:outputText value="#{list1.idAgent}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Name">
+                    <center>
+                        <h:outputText value="#{list1.name}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Type">
+                    <center>
+                        <h:outputText value="#{list1.typeAgent}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Option">
+                    <center>
+                        <p:commandButton title="Details" 
+                                         value="Details" 
+                                         icon="ui-icon-zoomin" 
+                                         action="/faces/Process/Agents/instanceProcess.xhtml?faces-redirect=true"
+                                         ajax="true">
+                            <f:setPropertyActionListener value="#{list1}" target="#{agentBean.agent}" />
+                        </p:commandButton>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+
+        <h2 class="page-header"> <center> Entity </center></h2>
+        <h:form>
+            <p:dataTable var="list3" value="#{wasattributedtoBean.buscar(activityBean.activity.idProcessInstance)}" id="tabela3" emptyMessage="No Records Found"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
+                >
+
+                <p:column headerText="Id">
+                    <center>
+                        <h:outputText value="#{list3.idEntity}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Name">
+                    <center>
+                        <h:outputText value="#{list3.name}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Type">
+                    <center>
+                        <h:outputText value="#{list3.typeEntity}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Option">
+                    <center>
+                        <p:commandButton title="Details" 
+                                         value="Details" 
+                                         icon="ui-icon-zoomin" 
+                                         action="/faces/Process/Entity/instanceProcess.xhtml?faces-redirect=true"
+                                         ajax="true">
+                            <f:setPropertyActionListener value="#{list3}" target="#{entityBean.entity}" />
+                        </p:commandButton>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

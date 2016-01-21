@@ -1,0 +1,77 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h1 class="page-header"><center>My Process</center></h1>
+        <h:form id="formProcess" enctype="multipart/form-data">
+            <p:growl id="messages" showDetail="true" />
+            <center>
+
+                <p:commandButton onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" icon="ui-icon-refresh" value="Load Data"  ajax="false"  actionListener="#{ontologyBean.load}"  />
+                <p:commandButton onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" title="All Informations" 
+                                 value="All Informations" 
+                                 icon="ui-icon-zoomin" 
+                                 action="/faces/Process/Instance/ontologyallinformation.xhtml?faces-redirect=true"
+                                 ajax="false"/>
+
+                <p:commandButton onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" icon="ui-icon-image" value="Graphic View"  ajax="false"  action="/faces/ontology.xhtml?faces-redirect=true"/>
+
+                <p:commandButton onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" icon="ui-icon-clipboard" value="Data Analysis View"  ajax="false"  action="/faces/Process/Instance/wekainformation.xhtml?faces-redirect=true"/>
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    Waiting... Processing. <br/>
+                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                </p:dialog>
+
+            </center>
+            <br/><br/>
+            <h1 class="page-header"> <center> Instances </center></h1>
+        </h:form>
+        <p:outputLabel value="* MM/dd/yyyy HH:mm" style="color: #ff0100"/> 
+        <br/>
+        <h:form>
+            <p:dataTable var="list0" value="#{activityBean.activities}" id="tabela1" emptyMessage="No Records Found"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
+                >
+
+                <p:column headerText="Id">
+                    <center>
+                        <h:outputText value="#{list0.idProcessInstance}" />
+                    </center>
+                </p:column>
+                <p:column headerText="Start Time *">
+                    <center>
+                        <h:outputText value="#{list0.startTime}" >
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                        </h:outputText>
+                    </center>
+                </p:column>
+                <p:column headerText="End Time *">
+                    <center>
+                        <h:outputText value="#{list0.endTime}" >
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                        </h:outputText>
+                    </center>
+                </p:column>
+                <p:column headerText="Option">
+                    <center>
+                        <p:commandButton title="Details" 
+                                         value="Details" 
+                                         icon="ui-icon-zoomin" 
+                                         action="/faces/Process/Instance/instanceProcess.xhtml?faces-redirect=true"
+                                         ajax="true">
+                            <f:setPropertyActionListener value="#{list0}" target="#{activityBean.activity}" />
+                        </p:commandButton>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

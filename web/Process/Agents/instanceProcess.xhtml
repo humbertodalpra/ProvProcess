@@ -1,0 +1,39 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel value="Id:" styleClass="panelGridLabel" />
+                <h:outputText value="#{agentBean.agent.idAgent}" />
+
+                <h:outputLabel value="Name:" styleClass="panelGridLabel" />
+                <h:outputText value="#{agentBean.agent.name}" />
+
+                <h:outputLabel value="Type:" styleClass="panelGridLabel" />
+                <h:outputText value="#{agentBean.agent.typeAgent}"/>
+
+            </h:panelGrid>
+            <br/>
+
+            <div align="center">
+               <H2>
+                <CENTER>
+                    Information wtih inferences
+                </CENTER>
+                </H2>
+
+                <p:dataTable var="ont" value="#{(ontologyBean.getInfluenced(activityBean.activity.name, activityBean.activity.idActivity))}" id="tbl" emptyMessage="No records found" style="width:30%">
+
+                    <p:column headerText="Influenced">
+                        <h:outputText value="#{ont}" />
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

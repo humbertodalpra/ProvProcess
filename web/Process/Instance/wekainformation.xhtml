@@ -1,0 +1,26 @@
+<ui:composition template="/WEB-INF/templates/layoutOntology.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Information</h2>
+        <center>
+            <h2>Data Analysis View</h2>
+            <h:form id="formPrincipal">
+
+                <p:dataTable var="ont" value="#{wekaBean.wekaList}"
+                             id="tbl" emptyMessage="No records found"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                    <p:column headerText="Information" sortBy="#{ont}" filterBy="#{ont}">
+                        <h:outputText value="#{ont}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>
