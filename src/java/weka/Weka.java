@@ -21,6 +21,7 @@ import model.Activity;
 import model.Agent;
 import model.Entity;
 import model.Wasinformedby;
+import weka.associations.Apriori;
 import weka.core.Instances;
 import weka.core.Instance;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -66,9 +67,17 @@ public class Weka implements Runnable {
         List<String> results = new ArrayList<String>();
         // Cria uma nova instancia da arvore
         JCBA car = new JCBA();
+        Apriori apriori = new Apriori();
+        
+        apriori.setDelta(0.05);
+        apriori.setLowerBoundMinSupport(0.01);
+        apriori.setMinMetric(0.01);
+        apriori.setNumRules(1000);
 
         // Constrói classificador
         car.setCBA(false);
+        car.setCF((float) 0.25);
+        car.setCarMiner(apriori);
         car.buildClassifier(dados);
 
         // Imprime a arvore
