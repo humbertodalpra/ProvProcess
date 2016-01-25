@@ -39,7 +39,7 @@ public class OntologyBean implements Serializable {
 
     public void load() throws IOException {
         try {
-            //new OntologyDAO().run();
+            new OntologyDAO().run();
  
             String caminhoDados = "/C:/Users/Humberto/Desktop/data.arff";
             new Weka(caminhoDados).run();

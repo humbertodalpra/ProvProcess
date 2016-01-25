@@ -134,7 +134,7 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
                 + "SELECT ?subject\n"
                 + " 	WHERE { \n"
-                + "?subject prov:influenced <http://www.w3.org/ns/prov#" + nome + "_" + id + ">.\n"
+                + "?subject prov:influenced <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
                 + "}";
         Query query = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query, ontModel);
@@ -174,7 +174,7 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
                 + "SELECT ?subject\n"
                 + " 	WHERE { \n"
-                + "?subject prov:wasInfluencedBy <http://www.w3.org/ns/prov#" + nome + "_" + id + ">.\n"
+                + "?subject prov:wasInfluencedBy <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
                 + "}";
         Query query2 = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query2, model);
@@ -214,7 +214,7 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
                 + "SELECT ?subject\n"
                 + " 	WHERE { \n"
-                + "?subject prov:wasAssociatedWith <http://www.w3.org/ns/prov#" + nome + "_" + id + ">.\n"
+                + "?subject prov:wasAssociatedWith <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
                 + "}";
         Query query2 = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query2, model);
@@ -254,7 +254,7 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
                 + "SELECT ?subject\n"
                 + " 	WHERE { \n"
-                + "?subject prov:wasInformedBy <http://www.w3.org/ns/prov#" + nome + "_" + id + ">.\n"
+                + "?subject prov:wasInformedBy <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
                 + "}";
         Query query2 = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query2, model);
@@ -294,7 +294,7 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
                 + "SELECT ?subject\n"
                 + " 	WHERE { \n"
-                + "?subject prov:used <http://www.w3.org/ns/prov#" + nome + "_" + id + ">.\n"
+                + "?subject prov:used <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
                 + "}";
         Query query2 = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query2, model);
@@ -334,7 +334,7 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
                 + "SELECT ?subject\n"
                 + " 	WHERE { \n"
-                + "?subject prov:wasAttributedTo <http://www.w3.org/ns/prov#" + nome + "_" + id + ">.\n"
+                + "?subject prov:wasAttributedTo <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
                 + "}";
         Query query2 = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query2, model);
@@ -374,7 +374,7 @@ public class OntologyDAO implements Runnable {
         //ontologia carregada na máquina de inferencia
         model = ModelFactory.createOntologyModel(ontModelSpec, ontModel);
 
-       // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Loading data from database", "OK"));
+        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Loading data from database", "OK"));
         System.out.println("Loading data from database");
 
         //Carrega os Activitys na ontologia apartir do banco de dados
@@ -390,14 +390,25 @@ public class OntologyDAO implements Runnable {
         activitys = new ActivityDAO().buscarTodas();
         for (Object activity1 : activitys) {
             activity = (Activity) activity1;
-            Individual act = model.createIndividual(baseURI + activity.getName().replace(" ", "_") + "_" + activity.getIdActivity(), resourceact);
-            int ipi = activity.getIdProcessInstance();
-            String convertipi = String.valueOf(ipi);
-            act.addProperty(dppii, convertipi);
-            act.addProperty(dpta, activity.getTypeActivity());
-            act.addProperty(dpp, activity.getPriority());
-            act.addProperty(dpsat, activity.getStartTime().toString().replace(" ", "_"));
-            act.addProperty(dpeat, activity.getEndTime().toString().replace(" ", "_"));
+            if (!activity.getName().equals("")) {
+                Individual act = model.createIndividual(baseURI + activity.getName().replace(" ", "_") + "_" + activity.getIdActivity(), resourceact);
+                int ipi = activity.getIdProcessInstance();
+                String convertipi = String.valueOf(ipi);
+                act.addProperty(dppii, convertipi);
+
+                if (!activity.getTypeActivity().equals("")) {
+                    act.addProperty(dpta, activity.getTypeActivity());
+                }
+                if (!activity.getPriority().equals("")) {
+                    act.addProperty(dpp, activity.getPriority());
+                }
+                if (activity.getStartTime() != null) {
+                    act.addProperty(dpsat, activity.getStartTime().toString().replace(" ", "_"));
+                }
+                if (activity.getEndTime() != null) {
+                    act.addProperty(dpeat, activity.getEndTime().toString().replace(" ", "_"));
+                }
+            }
         }
 
         //Carrega os Agents na ontologia apartir do banco de dados
@@ -406,15 +417,17 @@ public class OntologyDAO implements Runnable {
         agents = new AgentDAO().buscarTodas();
         for (Object agent1 : agents) {
             agent = (Agent) agent1;
-            if (agent.getTypeAgent().equals("Person")) {
-                Resource resourceperson = model.getResource(baseURI + "Person");
-                model.createIndividual(baseURI + agent.getName().replace(" ", "_") + "_" + agent.getIdAgent(), resourceperson);
-            } else if (agent.getTypeAgent().equals("Organization")) {
-                Resource resourceperson = model.getResource(baseURI + "Organization");
-                model.createIndividual(baseURI + agent.getName().replace(" ", "_") + "_" + agent.getIdAgent(), resourceperson);
-            } else {
-                Resource resourceperson = model.getResource(baseURI + "SoftwareAgent");
-                model.createIndividual(baseURI + agent.getName().replace(" ", "_") + "_" + agent.getIdAgent(), resourceperson);
+            if (!agent.getName().isEmpty()) {
+                if (agent.getTypeAgent().equals("Person")) {
+                    Resource resourceperson = model.getResource(baseURI + "Person");
+                    model.createIndividual(baseURI + agent.getName().replace(" ", "_") + "_" + agent.getIdAgent(), resourceperson);
+                } else if (agent.getTypeAgent().equals("Organization")) {
+                    Resource resourceperson = model.getResource(baseURI + "Organization");
+                    model.createIndividual(baseURI + agent.getName().replace(" ", "_") + "_" + agent.getIdAgent(), resourceperson);
+                } else {
+                    Resource resourceperson = model.getResource(baseURI + "SoftwareAgent");
+                    model.createIndividual(baseURI + agent.getName().replace(" ", "_") + "_" + agent.getIdAgent(), resourceperson);
+                }
             }
         }
 
@@ -425,9 +438,11 @@ public class OntologyDAO implements Runnable {
         waws = new WasassociatedwithDAO().buscarTodas();
         for (Object waw1 : waws) {
             waw = (Wasassociatedwith) waw1;
-            Individual a = model.getIndividual(baseURI + waw.getActivityidActivity().getName().replace(" ", "_") + "_" + waw.getActivityidActivity().getIdActivity());
-            Individual ag = model.getIndividual(baseURI + waw.getAgentidAgent().getName().replace(" ", "_") + "_" + waw.getAgentidAgent().getIdAgent());
-            a.addProperty(pwaw, ag);
+            if (!waw.getAgentidAgent().getName().isEmpty() && !waw.getActivityidActivity().getName().isEmpty()) {
+                Individual a = model.getIndividual(baseURI + waw.getActivityidActivity().getName().replace(" ", "_") + "_" + waw.getActivityidActivity().getIdActivity());
+                Individual ag = model.getIndividual(baseURI + waw.getAgentidAgent().getName().replace(" ", "_") + "_" + waw.getAgentidAgent().getIdAgent());
+                a.addProperty(pwaw, ag);
+            }
         }
 
         //Carrega os Entitys na ontologia apartir do banco de dados
@@ -439,8 +454,10 @@ public class OntologyDAO implements Runnable {
         entitys = new EntityDAO().buscarTodas();
         for (Object entity1 : entitys) {
             entity = (Entity) entity1;
-            Individual ent = model.createIndividual(baseURI + entity.getName().replace(" ", "_") + "_" + entity.getIdEntity(), resourceorg);
-            ent.addProperty(dpte, entity.getTypeEntity());
+            if (!entity.getName().isEmpty() && !entity.getIdEntity().toString().isEmpty()) {
+                Individual ent = model.createIndividual(baseURI + entity.getName().replace(" ", "_") + "_" + entity.getIdEntity(), resourceorg);
+                ent.addProperty(dpte, entity.getTypeEntity());
+            }
         }
 
         //Prepara os objectsProperties
@@ -450,9 +467,11 @@ public class OntologyDAO implements Runnable {
         useds = new UsedDAO().buscarTodas();
         for (Object used1 : useds) {
             used = (Used) used1;
-            Individual a2 = model.getIndividual(baseURI + used.getActivityidActivity().getName().replace(" ", "_") + "_" + used.getActivityidActivity().getIdActivity());
-            Individual e = model.getIndividual(baseURI + used.getEntityidEntity().getName().replace(" ", "_") + "_" + used.getEntityidEntity().getIdEntity());
-            a2.addProperty(opused, e);
+            if (!used.getActivityidActivity().getName().isEmpty() && !used.getEntityidEntity().getName().isEmpty()) {
+                Individual a2 = model.getIndividual(baseURI + used.getActivityidActivity().getName().replace(" ", "_") + "_" + used.getActivityidActivity().getIdActivity());
+                Individual e = model.getIndividual(baseURI + used.getEntityidEntity().getName().replace(" ", "_") + "_" + used.getEntityidEntity().getIdEntity());
+                a2.addProperty(opused, e);
+            }
         }
 
         //Prepara os objectsProperties
@@ -462,9 +481,11 @@ public class OntologyDAO implements Runnable {
         wats = new WasattributedtoDAO().buscarTodas();
         for (Object wat1 : wats) {
             wat = (Wasattributedto) wat1;
-            Individual ag2 = model.getIndividual(baseURI + wat.getAgentidAgent().getName().replace(" ", "_") + "_" + wat.getAgentidAgent().getIdAgent());
-            Individual e2 = model.getIndividual(baseURI + wat.getEntityidEntity().getName().replace(" ", "_") + "_" + wat.getEntityidEntity().getIdEntity());
-            e2.addProperty(opwat, ag2);
+            if (!wat.getAgentidAgent().getName().isEmpty() && !wat.getEntityidEntity().getName().isEmpty()) {
+                Individual ag2 = model.getIndividual(baseURI + wat.getAgentidAgent().getName().replace(" ", "_") + "_" + wat.getAgentidAgent().getIdAgent());
+                Individual e2 = model.getIndividual(baseURI + wat.getEntityidEntity().getName().replace(" ", "_") + "_" + wat.getEntityidEntity().getIdEntity());
+                e2.addProperty(opwat, ag2);
+            }
         }
 
 //Prepara os objectsProperties
@@ -474,9 +495,11 @@ public class OntologyDAO implements Runnable {
         wibs = new WasinformedbyDAO().buscarTodas();
         for (Object wib1 : wibs) {
             wib = (Wasinformedby) wib1;
-            Individual a3 = model.getIndividual(baseURI + wib.getActivityidActivityInformant().getName().replace(" ", "_") + "_" + wib.getActivityidActivityInformant().getIdActivity());
-            Individual a4 = model.getIndividual(baseURI + wib.getActivityidActivityInformed().getName().replace(" ", "_") + "_" + wib.getActivityidActivityInformed().getIdActivity());
-            a3.addProperty(opwib, a4);
+            if (!wib.getActivityidActivityInformant().getName().isEmpty() && !wib.getActivityidActivityInformed().getName().isEmpty()) {
+                Individual a3 = model.getIndividual(baseURI + wib.getActivityidActivityInformant().getName().replace(" ", "_") + "_" + wib.getActivityidActivityInformant().getIdActivity());
+                Individual a4 = model.getIndividual(baseURI + wib.getActivityidActivityInformed().getName().replace(" ", "_") + "_" + wib.getActivityidActivityInformed().getIdActivity());
+                a3.addProperty(opwib, a4);
+            }
         }
 
         //validar a nova ontologia a ser criada
@@ -516,7 +539,7 @@ public class OntologyDAO implements Runnable {
         //utilizar RDF/XML-ABBREV, so RDF/XML da erro no protege!
         model.write(out, "RDF/XML-ABBREV");
         System.out.println("Ontology Load");
-       // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Status", "Ontology successfully loaded"));
+        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Status", "Ontology successfully loaded"));
 
     }
 }
