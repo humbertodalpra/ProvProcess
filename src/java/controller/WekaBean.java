@@ -38,7 +38,7 @@ public class WekaBean implements Serializable {
   
     public List<String> getWekaList() throws Exception {
         List<String> result = new ArrayList<>();
-        caminhoDados = "/C:/Users/Humberto/Desktop/data.arff";
+        caminhoDados = "/C:/Users/humbe/OneDrive/Mestrado/Dissertação/Weka/data.arff";
         Weka weka = new Weka(caminhoDados);
 
         weka.leDados();
