@@ -63,7 +63,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-load.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-load.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -116,7 +116,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-load.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-load.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -156,7 +156,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-load.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-load.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -196,7 +196,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-loadnotinference.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-loadnotinference.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -236,7 +236,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-loadnotinference.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-loadnotinference.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -276,7 +276,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-loadnotinference.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-loadnotinference.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -316,7 +316,7 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-loadnotinference.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-loadnotinference.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
@@ -359,10 +359,10 @@ public class OntologyDAO implements Runnable {
         //uri da ontologia
         String baseURI = "http://www.w3.org/ns/prov#";
         //caminho fisico da ontologia
-        String ontologia = "file:///C:/Users/Humberto/Desktop/OntologyProvProcess-Empty.owl";
+        String ontologia = "file:///C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-Empty.owl";
         //caminho fisico da nova ontologia
-        String newontology = "/C:/Users/Humberto/Desktop/OntologyProvProcess-load.owl";
-        String newontology2 = "/C:/Users/Humberto/Desktop/OntologyProvProcess-loadnotinference.owl";
+        String newontology = "/C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-load.owl";
+        String newontology2 = "/C:/Users/humbe/OneDrive/Mestrado/Dissertação/OWL/OntologyProvProcess-loadnotinference.owl";
 
         //inicia a maquina de inferencia e carrega a ontologia nela
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
