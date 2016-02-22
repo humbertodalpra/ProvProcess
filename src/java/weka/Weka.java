@@ -307,7 +307,7 @@ System.out.println(results.toString());
             // Gravando no arquivo  
             File arquivo;
 
-            arquivo = new File("/C:/Users/Humberto/Desktop/data.arff");
+            arquivo = new File("/C:/Users/humbe/OneDrive/Mestrado/Dissertação/Weka/data.arff");
             FileOutputStream fos = new FileOutputStream(arquivo);
             String texto = data;
             fos.write(texto.getBytes());
