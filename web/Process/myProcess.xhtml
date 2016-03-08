@@ -40,19 +40,19 @@
                          paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
                 >
 
-                <p:column headerText="Id">
+                <p:column headerText="Id" sortBy="#{list0.idProcessInstance}" filterBy="#{list0.idProcessInstance}">
                     <center>
                         <h:outputText value="#{list0.idProcessInstance}" />
                     </center>
                 </p:column>
-                <p:column headerText="Start Time *">
+                <p:column headerText="Start Time *" sortBy="#{list0.startTime}" filterBy="#{list0.startTime}">
                     <center>
                         <h:outputText value="#{list0.startTime}" >
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
                         </h:outputText>
                     </center>
                 </p:column>
-                <p:column headerText="End Time *">
+                <p:column headerText="End Time *" sortBy="#{list0.endTime}" filterBy="#{list0.endTime}">
                     <center>
                         <h:outputText value="#{list0.endTime}" >
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
