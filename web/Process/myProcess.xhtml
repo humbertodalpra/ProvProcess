@@ -59,6 +59,17 @@
                         </h:outputText>
                     </center>
                 </p:column>
+                <p:column headerText="Duration (HH:mm)">
+                    <center>
+                        <h:outputText value="#{list0.getDuration()}">
+                        </h:outputText>  
+                    </center>
+                    <!-- <center>
+                        <h:outputText value= endTime - startTime >
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                        </h:outputText>
+                    </center>-->
+                </p:column>
                 <p:column headerText="Option">
                     <center>
                         <p:commandButton title="Details" 
