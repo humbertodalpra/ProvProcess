@@ -8,6 +8,7 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -307,4 +309,9 @@ public class Activity implements Serializable {
         return "model.Activity[ idActivity=" + idActivity + " ]";
     }
     
+    @Transient 
+    public String getDuration(){
+        long duration =  endTime.getTime() - startTime.getTime();
+        return  duration <= 0 ? "00" : String.format("%03d:%02d", TimeUnit.MILLISECONDS.toHours(duration), TimeUnit.MILLISECONDS.toMinutes(duration % 60)  );
+    }
 }
