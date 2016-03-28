@@ -59,7 +59,7 @@
                         </h:outputText>
                     </center>
                 </p:column>
-                <p:column headerText="Duration (HH:MM)">
+                <p:column headerText="Duration (HH:MM)" sortBy="#{list0.duration}" filterBy="#{list0.duration}">
                     <center>
                         <h:outputText value="#{list0.getDuration()}">
                         </h:outputText>  
