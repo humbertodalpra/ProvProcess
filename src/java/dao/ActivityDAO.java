@@ -63,6 +63,7 @@ public class ActivityDAO {
     public List<Activity> buscarInstancias() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select distinct act from Activity act group by act.idProcessInstance");
+        //Query query = em.createQuery("select a.idactivity, a.name, a.starttime, b.endtime, a.idprocessinstance, a.type_activity, a.priority from Activity as a, activity as b WHERE a.starttime IS NOT NULL and b.endTime IS NOT NULL group by a.idProcessInstance");
         return query.getResultList();
     }
 
