@@ -25,8 +25,8 @@ public class AgentDAO {
      */
     public Agent buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Agent As a where a.name =:nome ");
-        query.setParameter("nome", nome.toUpperCase());
+        Query query = em.createQuery("select a from Agent a where a.name =:nome ");
+        query.setParameter("nome", nome);
 
         List<Agent> agents = query.getResultList();
         if (agents != null && agents.size() > 0) {

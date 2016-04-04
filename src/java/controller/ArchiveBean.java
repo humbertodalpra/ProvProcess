@@ -201,20 +201,25 @@ public class ArchiveBean implements Serializable {
         //SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("BRT"));
-        startDate = objetcs[4].equals("-") ? null :df.parse(objetcs[4]);
-        endDate = objetcs[5].equals("-") ? null: df.parse(objetcs[5]);
+        startDate = objetcs[4].equals("-") ? null : df.parse(objetcs[4]);
+        endDate = objetcs[5].equals("-") ? null : df.parse(objetcs[5]);
         activity.setStartTime(startDate);
         activity.setEndTime(endDate);
         activity = ActivityDAO.getInstance().persistir(activity);
 
         Agent agent = new Agent();
-        agent.setName(objetcs[6]);
-        if (objetcs[7] == null) {
-            agent.setTypeAgent("Person");
+        Agent result = AgentDAO.getInstance().buscar(objetcs[6]);
+        if (result == null) {
+            agent.setName(objetcs[6]);
+            if (objetcs[7] == null) {
+                agent.setTypeAgent("Person");
+            } else {
+                agent.setTypeAgent(objetcs[7]);
+            }
+            agent = AgentDAO.getInstance().persistir(agent);
         } else {
-            agent.setTypeAgent(objetcs[7]);
+            agent = AgentDAO.getInstance().buscar(objetcs[6]);
         }
-        agent = AgentDAO.getInstance().persistir(agent);
 
         if (!objetcs[8].equals("-")) {
             Entity entity = new Entity();
