@@ -35,7 +35,7 @@
         <p:outputLabel value="* MM/dd/yyyy HH:mm" style="color: #ff0100"/> 
         <br/>
         <h:form>
-            <p:dataTable var="list0" value="#{activityBean.activities}" id="tabela1" emptyMessage="No Records Found"
+            <p:dataTable var="list0" value="#{instanceBean.instances}" id="tabela1" emptyMessage="No Records Found"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
                 >
@@ -55,20 +55,16 @@
                 <p:column headerText="End Time *" sortBy="#{list0.endTime}" filterBy="#{list0.endTime}">
                     <center>
                         <h:outputText value="#{list0.endTime}" >
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
                         </h:outputText>
                     </center>
                 </p:column>
-               <!--<p:column headerText="Duration (HH:MM)" sortBy="#{list0.duration}" filterBy="#{list0.duration}">
+               <p:column headerText="Duration (HH:MM)" sortBy="#{list0.duration}" filterBy="#{list0.duration}">
                     <center>
                         <h:outputText value="#{list0.getDuration()}">
                         </h:outputText>  
                     </center>
-                    <center>
-                        <h:outputText value= endTime - startTime >
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
-                        </h:outputText>
-                    </center>
-                </p:column>-->
+                </p:column>
                 <p:column headerText="Option">
                     <center>
                         <p:commandButton title="Details" 
@@ -76,7 +72,7 @@
                                          icon="ui-icon-zoomin" 
                                          action="/faces/Process/Instance/instanceProcess.xhtml?faces-redirect=true"
                                          ajax="true">
-                            <f:setPropertyActionListener value="#{list0}" target="#{activityBean.activity}" />
+                            <f:setPropertyActionListener value="#{list0}" target="#{instanceBean.instance}" />
                         </p:commandButton>
                     </center>
                 </p:column>

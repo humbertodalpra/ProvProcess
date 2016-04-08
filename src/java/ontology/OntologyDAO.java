@@ -212,9 +212,11 @@ public class OntologyDAO implements Runnable {
                 + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
                 + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"
                 + "PREFIX prov: <http://www.w3.org/ns/prov#>\n"
-                + "SELECT ?subject\n"
-                + " 	WHERE { \n"
-                + "?subject prov:wasAssociatedWith <http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + ">.\n"
+                + "SELECT distinct ?p ?o\n" +
+                "WHERE\n" +
+                "{	<http://www.w3.org/ns/prov#" + nome.replaceAll(" ", "_") + "_" + id + "> ?p ?o\n"
+                + "	. ?p a owl:ObjectProperty \n"
+                + "\n"
                 + "}";
         Query query2 = QueryFactory.create(sql);
         QueryExecution qe = QueryExecutionFactory.create(query2, model);

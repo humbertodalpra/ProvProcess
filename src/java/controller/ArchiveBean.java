@@ -17,6 +17,7 @@ import dao.ActivityDAO;
 import dao.AgentDAO;
 import dao.ArchiveDAO;
 import dao.EntityDAO;
+import dao.InstanceDAO;
 import dao.UsedDAO;
 import dao.WasassociatedwithDAO;
 import dao.WasattributedtoDAO;
@@ -41,6 +42,7 @@ import model.Activity;
 import model.Agent;
 import model.Archive;
 import model.Entity;
+import model.Instance;
 import model.Used;
 import model.Wasassociatedwith;
 import model.Wasattributedto;
@@ -81,6 +83,8 @@ public class ArchiveBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("DB Clean"));
                 if (generateEntitys(file)) {  // generate entitys 
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("File: ", file.getFileName() + " is uploaded."));
+                    //remove a sessão atual e gerar uma nova:
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("activityBean");
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid File. Error in process..."));
                 }
@@ -207,6 +211,20 @@ public class ArchiveBean implements Serializable {
         activity.setEndTime(endDate);
         activity = ActivityDAO.getInstance().persistir(activity);
 
+        Instance instance = new Instance();
+        Instance resultinstance = InstanceDAO.getInstance().buscar(activity.getIdProcessInstance());
+        if (resultinstance == null) {
+            instance.setIdProcessInstance(activity.getIdProcessInstance());
+            instance.setStartTime(startDate);
+            instance.setEndTime(endDate);
+            InstanceDAO.getInstance().persistir(instance);
+        } else {
+            instance.setIdProcessInstance(resultinstance.getIdProcessInstance());
+            instance.setStartTime(resultinstance.getStartTime());
+            instance.setEndTime(endDate);
+            InstanceDAO.getInstance().persistir(instance);
+        }
+
         Agent agent = new Agent();
         Agent result = AgentDAO.getInstance().buscar(objetcs[6]);
         if (result == null) {
@@ -226,9 +244,14 @@ public class ArchiveBean implements Serializable {
             Wasattributedto wat = new Wasattributedto();
             Wasassociatedwith waw = new Wasassociatedwith();
 
-            entity.setName(objetcs[8]);
-            entity.setTypeEntity("Module");
-            entity = EntityDAO.getInstance().persistir(entity);
+            Entity resultentity = EntityDAO.getInstance().buscar(objetcs[8]);
+            if (resultentity == null) {
+                entity.setName(objetcs[8]);
+                entity.setTypeEntity("Module");
+                entity = EntityDAO.getInstance().persistir(entity);
+            } else {
+                entity = EntityDAO.getInstance().buscar(objetcs[8]);
+            }
 
             wat.setAgentidAgent(agent);
             wat.setEntityidEntity(entity);
@@ -236,6 +259,7 @@ public class ArchiveBean implements Serializable {
 
             waw.setActivityidActivity(activity);
             waw.setAgentidAgent(agent);
+            waw.setEntityidEntityPlan(entity);
             WasassociatedwithDAO.getInstance().persistir(waw);
 
             Used used = new Used();
@@ -246,19 +270,25 @@ public class ArchiveBean implements Serializable {
 
         if (!objetcs[9].equals("-")) {
             Entity entity = new Entity();
+
+            Entity resultentity = EntityDAO.getInstance().buscar(objetcs[9]);
+            if (resultentity == null) {
+                entity.setName(objetcs[9]);
+                entity.setTypeEntity("Component");
+                entity = EntityDAO.getInstance().persistir(entity);
+            } else {
+                entity = EntityDAO.getInstance().buscar(objetcs[9]);
+            }
+
             Wasattributedto wat = new Wasattributedto();
-            Wasassociatedwith waw = new Wasassociatedwith();
-
-            entity.setName(objetcs[9]);
-            entity.setTypeEntity("Component");
-            entity = EntityDAO.getInstance().persistir(entity);
-
             wat.setAgentidAgent(agent);
             wat.setEntityidEntity(entity);
             WasattributedtoDAO.getInstance().persistir(wat);
 
+            Wasassociatedwith waw = new Wasassociatedwith();
             waw.setActivityidActivity(activity);
             waw.setAgentidAgent(agent);
+            waw.setEntityidEntityPlan(entity);
             WasassociatedwithDAO.getInstance().persistir(waw);
 
             Used used = new Used();
@@ -269,19 +299,20 @@ public class ArchiveBean implements Serializable {
 
         if (!objetcs[10].equals("-")) {
             Entity entity = new Entity();
-            Wasattributedto wat = new Wasattributedto();
-            Wasassociatedwith waw = new Wasassociatedwith();
 
             entity.setName(objetcs[10]);
             entity.setTypeEntity("Version");
             entity = EntityDAO.getInstance().persistir(entity);
 
+            Wasattributedto wat = new Wasattributedto();
             wat.setAgentidAgent(agent);
             wat.setEntityidEntity(entity);
             WasattributedtoDAO.getInstance().persistir(wat);
 
+            Wasassociatedwith waw = new Wasassociatedwith();
             waw.setActivityidActivity(activity);
             waw.setAgentidAgent(agent);
+            waw.setEntityidEntityPlan(entity);
             WasassociatedwithDAO.getInstance().persistir(waw);
 
             Used used = new Used();
@@ -311,6 +342,7 @@ public class ArchiveBean implements Serializable {
         ActivityDAO.getInstance().removeAll();
         AgentDAO.getInstance().removeAll();
         EntityDAO.getInstance().removeAll();
+        InstanceDAO.getInstance().removeAll();
 
         return true;
 

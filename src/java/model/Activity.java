@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Activity.findByTypeActivity", query = "SELECT a FROM Activity a WHERE a.typeActivity = :typeActivity"),
     @NamedQuery(name = "Activity.findByPriority", query = "SELECT a FROM Activity a WHERE a.priority = :priority")})
 public class Activity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -308,10 +309,14 @@ public class Activity implements Serializable {
     public String toString() {
         return "model.Activity[ idActivity=" + idActivity + " ]";
     }
-    
-    @Transient 
-    public String getDuration(){
-        long duration =  endTime.getTime() - startTime.getTime();
-        return  duration <= 0 ? "00" : String.format("%03d:%02d", TimeUnit.MILLISECONDS.toHours(duration), TimeUnit.MILLISECONDS.toMinutes(duration % 60)  );
+
+    @Transient
+    public String getDuration() {
+        if (endTime != null) {
+            long duration = endTime.getTime() - startTime.getTime();
+            return duration <= 0 ? "00" : String.format("%03d:%02d", TimeUnit.MILLISECONDS.toHours(duration), TimeUnit.MILLISECONDS.toMinutes(duration % 60));
+        } else {
+            return "";
+        }
     }
 }

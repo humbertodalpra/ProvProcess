@@ -39,8 +39,8 @@ public class WasassociatedwithDAO {
    
     public List<Wasassociatedwith> buscarInstance(int nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Agent ag, Activity a, Wasassociatedwith w \n" +
-"    where a.idProcessInstance = :nome and a.idActivity = w.idWasAssociatedWith and w.agentidAgent = ag");
+        Query query = em.createQuery("select distinct ag from Agent ag, Activity a, Wasassociatedwith w \n" +
+"    where a.idProcessInstance = :nome and w.agentidAgent = ag");
         query.setParameter("nome", nome);
 
         List<Wasassociatedwith> wasassociatedwiths = query.getResultList();

@@ -49,7 +49,7 @@ public class WasattributedtoDAO {
 
     public List<Wasattributedto> buscarInstance(int nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Entity E, Activity a, Used U \n" +
+        Query query = em.createQuery("select distinct E from Entity E, Activity a, Used U \n" +
 "    where U.entityidEntity = E and U.activityidActivity = a  AND a.idProcessInstance = :nome");
         query.setParameter("nome", nome);
 

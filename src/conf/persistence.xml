@@ -28,6 +28,7 @@
     <class>model.Specializationof</class>
     <class>model.Alternateof</class>
     <class>weka.Weka</class>
+    <class>model.Instance</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.ddl-generation.output-mode" value="database"/>

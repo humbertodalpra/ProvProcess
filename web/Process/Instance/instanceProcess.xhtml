@@ -8,7 +8,7 @@
 
         <h2 class="page-header"> <center> Activity </center></h2>
         <h:form>
-            <p:dataTable var="list2" value="#{activityBean.buscar(activityBean.activity.idProcessInstance)}" id="tabela2" emptyMessage="No Records Found"
+            <p:dataTable var="list2" value="#{activityBean.buscar(instanceBean.instance.idProcessInstance)}" id="tabela2" emptyMessage="No Records Found"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
                 >
@@ -45,7 +45,7 @@
         <h2 class="page-header"> <center> Agent </center></h2>
 
         <h:form>
-            <p:dataTable var="list1" value="#{wasassociatedwithBean.buscar(activityBean.activity.idProcessInstance)}" id="tabela0" emptyMessage="No Records Found"
+            <p:dataTable var="list1" value="#{wasassociatedwithBean.buscar(instanceBean.instance.idProcessInstance)}" id="tabela0" emptyMessage="No Records Found"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
                 >
@@ -83,7 +83,7 @@
 
         <h2 class="page-header"> <center> Entity </center></h2>
         <h:form>
-            <p:dataTable var="list3" value="#{wasattributedtoBean.buscar(activityBean.activity.idProcessInstance)}" id="tabela3" emptyMessage="No Records Found"
+            <p:dataTable var="list3" value="#{wasattributedtoBean.buscar(instanceBean.instance.idProcessInstance)}" id="tabela3" emptyMessage="No Records Found"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginator="true" rows="5" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%; margin: 20px 0">
                 >
