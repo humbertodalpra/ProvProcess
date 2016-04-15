@@ -225,8 +225,8 @@ public class OntologyDAO implements Runnable {
         while (results.hasNext()) {
             QuerySolution next2 = results.next();
             String result2 = null;
-            result2 = next2.toString().replace("( ?subject = <http://www.w3.org/ns/prov#", "");
-            resultslist2.add(result2.replace("> )", ""));
+            result2 = next2.toString().replace("( ?p = <http://www.w3.org/ns/prov#", "").replace("( ?o = <http://www.w3.org/ns/prov#", "").replace("( ?p = owl:", "").replace(")", "");
+            resultslist2.add(result2.replace(">", ""));
         }
 
         return resultslist2;
